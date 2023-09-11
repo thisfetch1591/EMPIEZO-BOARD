@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>유저 관리 - 관리자만 가능</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/adminuser.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>User List</h2>
+    <table id = "user-list" class="table table-striped">
+        <thead>
+        <tr>
+            <th>사용자 아이디</th>
+            <th>이메일</th>
+            <th>사용자 닉네임</th>
+            <th>사용자 권한</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.nickname}"></td>
+            <td th:text="${user.role}"></td>
+            <td>
+                <button id="delete-button" th:data-id="${user.id}" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav class="justify-content-center">
+        <ul class="pagination" th:with="start=${(users.number/10) * 10 + 1},
+         end=(${(users.totalPages == 0) ? 1 : (start + (10 - 1) < users.totalPages ? start + (10 - 1) : users.totalPages)})" >
+            <li th:if="${start > 1}">
+                <a th:href="@{/users(page=0)}" th:text="'<<'"></a>
+            </li>
+            <li th:if="${start > 1}">
+                <a th:href="@{/users(page=${start - 10})}" th:text="'<'"></a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(start, end)}">
+                <a th:text="${page}" th:href="@{/users(page=${page - 1})}"></a>
+            </li>
+            <li th:if="${end < users.totalPages}">
+                <a th:href="@{/users(page=${start + 10})}" th:text="'>'"></a>
+            </li>
+            <li th:if="${end < users.totalPages}">
+                <a th:href="@{/users(page=${users.totalPages - 1})}" th:text="'>>'"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#delete-button').click(function(event) {
+            event.preventDefault();
+
+            const result = confirm("정말로 해당 회원을 삭제하시겠습니까?");
+
+            if(result) {
+                const currentUrl = $(location).attr('pathname') + "/";
+                let userId = $(this).data('id');
+
+                $.ajax({
+                    url: currentUrl + userId,
+                    type: 'DELETE',
+                    success: function(response) {
+                        $("#user-list").load(window.location.href +" #user-list");
+                    },
+                    error: function(error) {
+                        alert('삭제 실패');
+                        console.log(error);
+                    }
+                })
+            } else {
+
+            }
+        })
+    })
+</script>
+</html>
