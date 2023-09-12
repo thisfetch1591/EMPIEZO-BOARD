@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: header"></div>
 <div class="container mt-5">
     <h2>User List</h2>
     <table id = "user-list" class="table table-striped">
@@ -62,7 +63,7 @@
             const result = confirm("정말로 해당 회원을 삭제하시겠습니까?");
 
             if(result) {
-                const currentUrl = $(location).attr('pathname') + "/";
+                const currentUrl = "/users/";
                 let userId = $(this).data('id');
 
                 $.ajax({

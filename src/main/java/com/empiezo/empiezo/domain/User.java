@@ -33,8 +33,9 @@ public class User {
     @Column(nullable = false)
     private BooleanState isSocial;
 
-    public User update(String username) {
-        this.username= username;
+    public User update(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
         return this;
     }
 }

@@ -54,12 +54,12 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Post> searchByTitle(String title, Pageable pageable) {
         return postRepository.findByTitleContaining(title, pageable);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Post> searchByWriter(String writer, Pageable pageable) {
         return postRepository.findByWriterContaining(writer, pageable);
     }

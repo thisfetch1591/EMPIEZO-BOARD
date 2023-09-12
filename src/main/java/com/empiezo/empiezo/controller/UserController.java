@@ -1,5 +1,6 @@
 package com.empiezo.empiezo.controller;
 
+import com.empiezo.empiezo.config.UserPrincipal;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.UserDto;
 import com.empiezo.empiezo.service.UserService;
@@ -12,6 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +39,14 @@ public class UserController {
         return "board/boardlist";
     }
 
+    @PatchMapping("/users/{userId}")
+    @ResponseBody
+    public ResponseEntity<UserDto.ModifyRequest> modify(@Valid @ModelAttribute("dto") UserDto.ModifyRequest dto,
+                                                        BindingResult bindingResult,
+                                                        Model model) throws Exception{
+        
+    }
+
     @DeleteMapping("/users/{userId}")
     @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Long userId) {
@@ -43,20 +56,40 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
+        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authUser != null && !(authUser instanceof AnonymousAuthenticationToken) && authUser.isAuthenticated()) {
+            return "redirect:/posts";
+        }
         return "auth/login";
     }
 
     @GetMapping("/create-user")
     public String registerView(@ModelAttribute("dto") UserDto.RegisterRequest dto) {
+        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authUser != null && !(authUser instanceof AnonymousAuthenticationToken) && authUser.isAuthenticated()) {
+            return "redirect:/posts";
+        }
         return "auth/register";
     }
 
+    @GetMapping("/user")
+    public String modifyUser(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+        Long authUserId = userPrincipal.getUserId();
 
-    @GetMapping("/users")
+        UserDto.Response response = userService.get(authUserId);
+
+        model.addAttribute("user", response);
+        return "auth/usermodify";
+    }
+
+
+    @GetMapping("/admin/users")
     public String userList(
             Model model,
             @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<User> userList = userService.get(pageable);
+        Page<User> userList = userService.getList(pageable);
 
         model.addAttribute("users", userList);
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());

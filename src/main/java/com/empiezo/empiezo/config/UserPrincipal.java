@@ -6,24 +6,20 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class UserPrincipal extends User implements OAuth2User {
+public class UserPrincipal extends User implements OAuth2User, Serializable {
+
     private final Long userId;
-
-    private final String nickname;
-
-    private final String isSocial;
 
     private Map<String, Object> attr;
 
     public UserPrincipal(com.empiezo.empiezo.domain.User user) {
         super(user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority(user.getRole().toString())));
         this.userId = user.getId();
-        this.nickname = user.getNickname();
-        this.isSocial = user.getIsSocial().toString();
     }
 
     public UserPrincipal(com.empiezo.empiezo.domain.User user, Map<String, Object> attr) {

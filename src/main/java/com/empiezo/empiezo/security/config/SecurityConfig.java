@@ -33,6 +33,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
                         .requestMatchers("/login", "/users", "/create-user").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(form -> form
@@ -46,7 +47,6 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessHandler((request, response, authentication) ->
                                 response.sendRedirect("/login")))
-
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/login")
                         .userInfoEndpoint(userInfo -> userInfo.userService(oAuth2CustomUserService))

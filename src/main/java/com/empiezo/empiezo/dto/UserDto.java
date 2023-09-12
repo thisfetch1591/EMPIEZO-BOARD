@@ -1,5 +1,6 @@
 package com.empiezo.empiezo.dto;
 
+import com.empiezo.empiezo.domain.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,5 +41,36 @@ public class UserDto {
         @NotBlank(message = "패스워드를 입력해주세요.")
         @Size(min = 8, max = 20, message = "비밀번호는 8~20글자 이여야 합니다.")
         private String password;
+    }
+
+    @Data
+    @Builder
+    public static class ModifyRequest {
+        @NotBlank(message = "닉네임을 입력해주세요.")
+        @Size(min = 3, max = 8, message = "닉네임은 3~8글자 이여야 합니다.")
+        private String nickname;
+
+        @NotBlank(message = "패스워드를 입력해주세요.")
+        @Size(min = 8, max = 20, message = "비밀번호는 8~20글자 이여야 합니다.")
+        private String password;
+    }
+
+    @Data
+    public static class Response {
+        private final Long id;
+
+        private final String username;
+
+        private final String nickname;
+
+        private final String email;
+
+        @Builder
+        public Response(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.nickname = user.getNickname();
+            this.email = user.getEmail();
+        }
     }
 }

@@ -47,8 +47,22 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<User> get(Pageable pageable) {
+    public Page<User> getList(Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto.Response get(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+        return new UserDto.Response(user);
+    }
+    @Transactional
+    public void modify(Long id, UserDto.ModifyRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        user.update(request.getNickname(), request.getPassword());
     }
 
     @Transactional
@@ -63,17 +77,6 @@ public class UserService {
         }
 
         userRepository.delete(findUser);
-    }
-
-    public Map<String, String> validateHandler(Errors errors) {
-        Map<String, String> validateResult = new HashMap<>();
-
-        for (FieldError error: errors.getFieldErrors()) {
-            String validKeyName = "valid_" + error.getField();
-            validateResult.put(validKeyName, error.getDefaultMessage());
-        }
-
-        return validateResult;
     }
 
 }
