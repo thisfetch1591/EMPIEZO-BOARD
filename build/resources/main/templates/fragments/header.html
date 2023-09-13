@@ -9,7 +9,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
   <div class = "my-2 my-lg-0 mr-sm-0 my-sm-0" th:fragment="header">
       <nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
-          <a class="navbar-brand" href="#">EMPIEZO BOARD</a>
+          <a class="navbar-brand" th:href="@{/posts}">EMPIEZO BOARD</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -21,7 +21,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                       <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/login}"><span class="sr-only">LOGIN</span></a>
                   </li>
                   <li class="nav-item active">
-                      <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/logout}"><span class="sr-only">LOGOUT</span></a>
+                      <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/user}"><span class="sr-only">정보수정</span></a>
                   </li>
                   <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
                       <a class="nav-link" th:href="@{/admin/users}"><span class="sr-only">ADMIN</span></a>

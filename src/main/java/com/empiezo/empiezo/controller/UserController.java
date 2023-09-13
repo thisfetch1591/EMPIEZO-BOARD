@@ -39,12 +39,18 @@ public class UserController {
         return "board/boardlist";
     }
 
-    @PatchMapping("/users/{userId}")
-    @ResponseBody
-    public ResponseEntity<UserDto.ModifyRequest> modify(@Valid @ModelAttribute("dto") UserDto.ModifyRequest dto,
+    @PostMapping("/user/modify")
+    public String modify(@Valid @ModelAttribute("user") UserDto.ModifyRequest dto,
                                                         BindingResult bindingResult,
                                                         Model model) throws Exception{
-        
+        if (bindingResult.hasErrors()) {
+            Long authUserId = dto.getId();
+            UserDto.Response response = userService.get(authUserId);
+            model.addAttribute("user", response);
+            return "auth/usermodify";
+        }
+        userService.modify(dto.getId(), dto);
+        return "redirect:/posts";
     }
 
     @DeleteMapping("/users/{userId}")
