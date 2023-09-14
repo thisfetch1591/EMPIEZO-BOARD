@@ -27,27 +27,36 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void write(CommentDto.CommentWriteDto dto, Long userId, Long postId) {
-
+    public void write(CommentDto.WriteRequest dto, Long userId, Long postId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
+
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
+        postRepository.decreaseView(post.getId());
         String writer = user.getNickname();
 
         Comment comment = Comment.builder()
                 .writer(writer)
+                .username(user.getUsername())
                 .content(dto.getContent())
                 .user(user)
                 .post(post)
                 .build();
 
         commentRepository.save(comment);
-
-        postRepository.decreaseView(post.getId());
     }
 
+    @Transactional
+    public void modify(Long id, CommentDto.ModifyRequest modifyRequest) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(CommentNotFoundException::new);
+
+        comment.modify(modifyRequest.getModifyContent());
+    }
+
+    @Transactional
     public void delete(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(CommentNotFoundException::new);

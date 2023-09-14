@@ -6,13 +6,13 @@ import lombok.Data;
 public class LikesDto {
 
     @Data
-    public static class LikesWriteDto {
+    public static class WriteRequest {
 
         private Long userId;
         private Long postId;
 
         @Builder
-        public LikesWriteDto(Long userId, Long postId) {
+        public WriteRequest(Long userId, Long postId) {
             this.userId = userId;
             this.postId = postId;
         }

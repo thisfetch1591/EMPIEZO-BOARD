@@ -3,7 +3,6 @@ package com.empiezo.empiezo.controller;
 import com.empiezo.empiezo.domain.Post;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.PostDto;
-import com.empiezo.empiezo.dto.UserDto;
 import com.empiezo.empiezo.exception.PostNotFoundException;
 import com.empiezo.empiezo.repository.PostRepository;
 import com.empiezo.empiezo.repository.UserRepository;
@@ -64,7 +63,7 @@ class PostControllerTest {
     @DisplayName("/post 요청시 글작성 기능 적용")
     @Test
     void postTest() throws Exception {
-        PostDto.PostWriteDto dto = PostDto.PostWriteDto.builder()
+        PostDto.WriteRequest dto = PostDto.WriteRequest.builder()
                 .title("hello")
                 .content("나는 천재다 나는 개 천 재 다")
                 .build();
@@ -160,14 +159,14 @@ class PostControllerTest {
                 .build();
         postRepository.save(post);
 
-        PostDto.PostModify postModify = PostDto.PostModify.builder()
+        PostDto.ModifyRequest modifyRequest = PostDto.ModifyRequest.builder()
                 .title("수정 후 제목입니다.")
                 .content("수정 후 게시글입니다.")
                 .build();
 
         mockMvc.perform(patch("/posts/{postId}", post.getId())
                         .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(postModify)))
+                        .content(objectMapper.writeValueAsString(modifyRequest)))
                         .andExpect(status().isOk())
                 .andDo(print());
     }

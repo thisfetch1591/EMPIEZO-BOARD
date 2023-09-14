@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class PostDto {
 
     @Data
-    public static class PostWriteDto {
+    public static class WriteRequest {
 
         @NotBlank(message = "게시글 제목을 입력해주세요.")
         private String title;
@@ -21,7 +21,7 @@ public class PostDto {
         private BooleanState isSecret;
 
         @Builder
-        public PostWriteDto(String title, String content, BooleanState isSecret) {
+        public WriteRequest(String title, String content, BooleanState isSecret) {
             this.title = title;
             this.content = content;
             this.isSecret = isSecret;
@@ -30,7 +30,7 @@ public class PostDto {
 
     @Data
     @Builder
-    public static class PostModify {
+    public static class ModifyRequest {
 
         @NotBlank(message = "게시글 제목을 입력해주세요")
         private String title;
@@ -45,12 +45,18 @@ public class PostDto {
     @Data
     public static class Response {
         private final long id;
+
         private final String title;
+
         private final String content;
 
         private final String writer;
+
+
         private final Long userId;
+
         private final String createdDate, modifiedDate;
+
         private final int views;
 
         private final BooleanState isSecret;

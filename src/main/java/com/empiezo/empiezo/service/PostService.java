@@ -24,7 +24,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long write(PostDto.PostWriteDto dto, Long userId) {
+    public Long write(PostDto.WriteRequest dto, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
@@ -65,11 +65,11 @@ public class PostService {
     }
 
     @Transactional
-    public void modify(Long id, PostDto.PostModify postModify) {
+    public void modify(Long id, PostDto.ModifyRequest modifyRequest) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        post.modify(postModify.getTitle(), postModify.getContent());
+        post.modify(modifyRequest.getTitle(), modifyRequest.getContent());
     }
 
     @Transactional

@@ -42,6 +42,7 @@
     float: right;
 }
 
-#comment-button{
+#comment-button,
+#comment-modify-button{
     margin-top:10px;
 }

@@ -8,7 +8,6 @@ import com.empiezo.empiezo.dto.CommentDto;
 import com.empiezo.empiezo.repository.CommentRepository;
 import com.empiezo.empiezo.repository.PostRepository;
 import com.empiezo.empiezo.repository.UserRepository;
-import com.empiezo.empiezo.service.CommentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -65,7 +63,7 @@ public class CommentControllerTest {
         userRepository.save(user);
         postRepository.save(post);
 
-        CommentDto.CommentWriteDto request = CommentDto.CommentWriteDto.builder()
+        CommentDto.WriteRequest request = CommentDto.WriteRequest.builder()
                 .content("hello")
                 .writer(user.getNickname())
                 .build();

@@ -3,7 +3,6 @@ package com.empiezo.empiezo.service;
 import com.empiezo.empiezo.domain.Post;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.PostDto;
-import com.empiezo.empiezo.dto.UserDto;
 import com.empiezo.empiezo.exception.PostNotFoundException;
 import com.empiezo.empiezo.repository.PostRepository;
 import com.empiezo.empiezo.repository.UserRepository;
@@ -47,7 +46,7 @@ class PostServiceTest {
 
     @Test
     void postPosting() throws Exception {
-        PostDto.PostWriteDto dto = PostDto.PostWriteDto.builder()
+        PostDto.WriteRequest dto = PostDto.WriteRequest.builder()
                 .title("테스트 해볼게요")
                 .content("나는 천재다 하하 나를 모두 경배하라 경배하지 않는 자는 다 주거")
                 .build();
@@ -113,12 +112,12 @@ class PostServiceTest {
         Post post = postRepository.findById(buildPost.getId())
                 .orElseThrow(PostNotFoundException::new);
 
-        PostDto.PostModify postModify = PostDto.PostModify.builder()
+        PostDto.ModifyRequest modifyRequest = PostDto.ModifyRequest.builder()
                 .title("")
                 .content("이건 수정 후 입니다.")
                 .build();
 
-        post.modify(postModify.getTitle(), postModify.getContent());
+        post.modify(modifyRequest.getTitle(), modifyRequest.getContent());
 
         assertNotEquals("이건 수정 전입니다.", post.getContent());
     }

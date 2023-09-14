@@ -29,9 +29,9 @@ public class  PostController {
 
     @PostMapping("/posts")
     @ResponseBody
-    public ResponseEntity<PostDto.PostWriteDto> post(
+    public ResponseEntity<PostDto.WriteRequest> post(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @RequestBody @Valid PostDto.PostWriteDto request) {
+            @RequestBody @Valid PostDto.WriteRequest request) {
 
         Long currentLoginUserId = userPrincipal.getUserId();
         postService.write(request, currentLoginUserId);
@@ -41,7 +41,7 @@ public class  PostController {
 
     @PatchMapping("/posts/{postId}")
     @ResponseBody
-    public ResponseEntity<PostDto.PostModify> modify(@PathVariable Long postId, @RequestBody @Valid PostDto.PostModify request) {
+    public ResponseEntity<PostDto.ModifyRequest> modify(@PathVariable Long postId, @RequestBody @Valid PostDto.ModifyRequest request) {
         postService.modify(postId, request);
         return ResponseEntity.ok(request);
     }
@@ -65,11 +65,19 @@ public class  PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String getPost(@PathVariable Long postId, Model model) {
+    public String getPost(@PathVariable Long postId,
+                          @AuthenticationPrincipal UserPrincipal userPrincipal,
+                          Model model) {
+        String currentUsername = userPrincipal.getUsername();
+
         PostDto.Response res = postService.get(postId);
         List<CommentDto.Response> comments = res.getComments();
 
         model.addAttribute("post", res);
+
+        if(userPrincipal != null) {
+            model.addAttribute("currentUsername", currentUsername);
+        }
 
         if(comments != null && comments.isEmpty()) {
             model.addAttribute("comments", comments);
@@ -84,6 +92,7 @@ public class  PostController {
                                      @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                      @RequestParam("select-search-type") String param,
                                       @RequestParam("context") String text) {
+
         Page<Post> postList = null;
         if("title".equals(param)) {
             postList = postService.searchByTitle(text, pageable);
@@ -101,6 +110,7 @@ public class  PostController {
         PostDto.Response res = postService.get(postId);
 
         model.addAttribute("post", res);
+
         return "board/boardpatch";
     }
 
