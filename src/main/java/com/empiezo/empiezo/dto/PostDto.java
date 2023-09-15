@@ -53,13 +53,14 @@ public class PostDto {
         private final String writer;
 
         private final String username;
+
         private final Long userId;
 
         private final String createdDate, modifiedDate;
 
         private final int views;
 
-        private final BooleanState isSecret;
+        private final String isSecret;
 
         private final int likesCount;
 
@@ -76,7 +77,7 @@ public class PostDto {
             this.createdDate = post.getCreatedDate();
             this.modifiedDate = post.getModifiedDate();
             this.views = post.getViews();
-            this.isSecret = post.getIsSecret();
+            this.isSecret = post.getIsSecret().toString();
             this.likesCount = post.getLikeCount();
             this.comments = post.getComments().stream().map(CommentDto.Response::new).collect(Collectors.toList());
         }

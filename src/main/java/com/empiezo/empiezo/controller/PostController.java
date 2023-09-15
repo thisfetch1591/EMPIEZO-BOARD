@@ -36,7 +36,7 @@ public class  PostController {
     public ResponseEntity<PostDto.WriteRequest> post(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestBody @Valid PostDto.WriteRequest request) {
-
+        log.info("{}", request.getIsSecret());
         Long currentLoginUserId = userPrincipal.getUserId();
         postService.write(request, currentLoginUserId);
 
@@ -62,11 +62,14 @@ public class  PostController {
     @GetMapping("/posts")
     public String postList(
             Model model,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        getSessionCurrentUsername(model, userPrincipal);
+
         Page<Post> postList = postService.get(pageable);
 
         addAttributeWithModelForPagination(model, pageable, postList);
-
+        log.info("{}", model);
         return "board/boardlist";
     }
 
@@ -74,16 +77,13 @@ public class  PostController {
     public String getPost(@PathVariable Long postId,
                           @AuthenticationPrincipal UserPrincipal userPrincipal,
                           Model model) {
-        String currentUsername = userPrincipal.getUsername();
+        getSessionCurrentUsername(model, userPrincipal);
 
         PostDto.Response res = postService.get(postId);
         List<CommentDto.Response> comments = res.getComments();
 
         model.addAttribute("post", res);
 
-        if(userPrincipal != null) {
-            model.addAttribute("currentUsername", currentUsername);
-        }
 
         if(comments != null && comments.isEmpty()) {
             model.addAttribute("comments", comments);
@@ -95,9 +95,11 @@ public class  PostController {
 
     @GetMapping("/posts/search")
     public String postListGetBySearch(Model model,
+                                     @AuthenticationPrincipal UserPrincipal userPrincipal,
                                      @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                      @RequestParam("select-search-type") String param,
                                       @RequestParam("context") String text) {
+        getSessionCurrentUsername(model, userPrincipal);
 
         Page<Post> postList = null;
         if("title".equals(param)) {
@@ -131,5 +133,13 @@ public class  PostController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", postList.hasNext());
         model.addAttribute("hasPrev", postList.hasPrevious());
+    }
+
+    private void getSessionCurrentUsername(Model model, UserPrincipal userPrincipal) {
+        String currentUsername = userPrincipal.getUsername();
+
+        if(userPrincipal != null) {
+            model.addAttribute("currentUsername", currentUsername);
+        }
     }
 }
