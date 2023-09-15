@@ -52,7 +52,7 @@ public class PostDto {
 
         private final String writer;
 
-
+        private final String username;
         private final Long userId;
 
         private final String createdDate, modifiedDate;
@@ -71,6 +71,7 @@ public class PostDto {
             this.title = post.getTitle();
             this.content = post.getContent();
             this.writer = post.getWriter();
+            this.username = post.getUsername();
             this.userId = post.getUser().getId();
             this.createdDate = post.getCreatedDate();
             this.modifiedDate = post.getModifiedDate();

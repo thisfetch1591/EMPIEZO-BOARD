@@ -4,6 +4,8 @@ import com.empiezo.empiezo.config.UserPrincipal;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.UserDto;
 import com.empiezo.empiezo.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "사용자 API", description = "사용자에 대한 CRUD API")
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -53,6 +56,7 @@ public class UserController {
         return "redirect:/posts";
     }
 
+    @Operation(summary = "사용자 삭제", description="사용자의 id를 파라미터로 받습니다. Admin만 사용 가능합니다.")
     @DeleteMapping("/users/{userId}")
     @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Long userId) {

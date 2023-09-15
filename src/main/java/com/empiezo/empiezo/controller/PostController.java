@@ -5,6 +5,8 @@ import com.empiezo.empiezo.domain.Post;
 import com.empiezo.empiezo.dto.CommentDto;
 import com.empiezo.empiezo.dto.PostDto;
 import com.empiezo.empiezo.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +23,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "게시글 API", description = "게시글에 대한 CRUD API")
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class  PostController {
     private final PostService postService;
 
+    @Operation(summary = "게시글 작성", description="로그인 중인 user, DTO를 파라미터로 받습니다.")
     @PostMapping("/posts")
     @ResponseBody
     public ResponseEntity<PostDto.WriteRequest> post(
@@ -39,6 +43,7 @@ public class  PostController {
         return ResponseEntity.ok(request);
     }
 
+    @Operation(summary = "게시글 수정", description="해당 포스트의 id, DTO를 파라미터로 받습니다.")
     @PatchMapping("/posts/{postId}")
     @ResponseBody
     public ResponseEntity<PostDto.ModifyRequest> modify(@PathVariable Long postId, @RequestBody @Valid PostDto.ModifyRequest request) {
@@ -46,6 +51,7 @@ public class  PostController {
         return ResponseEntity.ok(request);
     }
 
+    @Operation(summary = "댓글 삭제", description="해당 포스트의 id를 파라미터로 받습니다")
     @DeleteMapping("/posts/{postId}")
     @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Long postId) {

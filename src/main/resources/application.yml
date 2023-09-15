@@ -46,3 +46,8 @@ logging:
         orm:
           jdbc:
             blind: trace
+
+springdoc:
+  packages-to-scan: com.empiezo.empiezo.controller
+
+

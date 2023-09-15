@@ -1,11 +1,11 @@
 package com.empiezo.empiezo.service;
 
-import com.empiezo.empiezo.domain.BooleanState;
-import com.empiezo.empiezo.domain.Post;
-import com.empiezo.empiezo.domain.Role;
-import com.empiezo.empiezo.domain.User;
+import com.empiezo.empiezo.domain.*;
 import com.empiezo.empiezo.dto.UserDto;
+import com.empiezo.empiezo.exception.LikeNotFoundException;
 import com.empiezo.empiezo.exception.UserNotFoundException;
+import com.empiezo.empiezo.repository.CommentRepository;
+import com.empiezo.empiezo.repository.LikesRepository;
 import com.empiezo.empiezo.repository.PostRepository;
 import com.empiezo.empiezo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,10 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PostRepository postRepository;
+
+    private final LikesRepository likesRepository;
+
+    private final CommentRepository commentRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -71,10 +75,9 @@ public class UserService {
 
         List<Post> posts = postRepository.findByUser(findUser);
 
-        for (Post post : posts) {
-            post.deleteUserId();
-            postRepository.save(post);
-        }
+        List<Likes> likes = likesRepository.findByUser(findUser);
+
+        List<Comment> comments = commentRepository.findByUser(findUser);
 
         userRepository.delete(findUser);
     }

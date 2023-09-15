@@ -1,6 +1,5 @@
 package com.empiezo.empiezo.domain;
 
-import com.empiezo.empiezo.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +18,9 @@ public class Post extends BaseTimeEntity {
     private String writer;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String title;
 
     @Lob
@@ -30,6 +32,7 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'TRUE'")
     private BooleanState isSecret;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -47,6 +50,7 @@ public class Post extends BaseTimeEntity {
         this.user = user;
         this.writer = writer;
         this.isSecret = isSecret;
+        this.username = user.getUsername();
     }
 
     public void modify(String title, String content) {

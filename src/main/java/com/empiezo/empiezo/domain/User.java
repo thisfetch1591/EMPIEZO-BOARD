@@ -3,6 +3,8 @@ package com.empiezo.empiezo.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -32,6 +34,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BooleanState isSocial;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Likes> likes;
 
     public User update(String nickname, String password) {
         this.nickname = nickname;
