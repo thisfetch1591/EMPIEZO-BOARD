@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.session:spring-session-jdbc'
+	implementation 'com.h2database:h2'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
@@ -43,6 +44,7 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -65,4 +67,8 @@ clean.doLast {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	enabled = false
 }

@@ -1,21 +1,25 @@
+#spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/empiezo;NON_KEYWORDS=USER;MODE=MySQL
+#    username: sa
+#    driver-class-name: org.h2.Driver
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/empiezo;NON_KEYWORDS=USER;MODE=MySQL
-    username: sa
-    driver-class-name: org.h2.Driver
-
-  sql:
-    init:
-      mode: always
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/empiezo?characterEncoding=UTF-8&serverTimezone=UTC
+    username: empiezo
+    password: 159125
 
   jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
+      type:
+        descriptor:
       ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true
-    defer-datasource-initialization: true
 
   thymeleaf:
     cache: false
