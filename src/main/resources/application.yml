@@ -11,11 +11,11 @@ spring:
     password: 159125
 
   jpa:
-    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       type:
         descriptor:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

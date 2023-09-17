@@ -2,8 +2,7 @@ package com.empiezo.empiezo.service;
 
 import com.empiezo.empiezo.domain.*;
 import com.empiezo.empiezo.dto.UserDto;
-import com.empiezo.empiezo.exception.LikeNotFoundException;
-import com.empiezo.empiezo.exception.UserNotFoundException;
+import com.empiezo.empiezo.exception.*;
 import com.empiezo.empiezo.repository.CommentRepository;
 import com.empiezo.empiezo.repository.LikesRepository;
 import com.empiezo.empiezo.repository.PostRepository;
@@ -38,16 +37,20 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public void register(UserDto.RegisterRequest request) {
-        var user = User.builder()
-                .username(request.getUsername())
-                .nickname(request.getNickname())
-                .password(bCryptPasswordEncoder.encode(request.getPassword()))
-                .email(request.getEmail())
-                .role(Role.ROLE_USER)
-                .isSocial(BooleanState.FALSE)
-                .build();
-        userRepository.save(user);
+    public void register(UserDto.RegisterRequest request) throws Exception {
+        boolean isDuplicate = validateUniqueUser(request);
+
+        if (isDuplicate) {
+            var user = User.builder()
+                    .username(request.getUsername())
+                    .nickname(request.getNickname())
+                    .password(bCryptPasswordEncoder.encode(request.getPassword()))
+                    .email(request.getEmail())
+                    .role(Role.ROLE_USER)
+                    .isSocial(BooleanState.FALSE)
+                    .build();
+            userRepository.save(user);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -82,4 +85,16 @@ public class UserService {
         userRepository.delete(findUser);
     }
 
+    public boolean validateUniqueUser(UserDto.RegisterRequest request) throws Exception{
+        if (userRepository.existsUserByNickname(request.getNickname())) {
+            throw new AlreadyExistUserNickname();
+        }
+        if (userRepository.existsUserByEmail(request.getEmail())) {
+            throw new AlreadyExistUserEmailException();
+        }
+        if (userRepository.existsUserByUsername(request.getUsername())) {
+            throw new AlreadyExistUsernameException();
+        }
+        return true;
+    }
 }

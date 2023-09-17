@@ -39,7 +39,7 @@ public class UserController {
             return "auth/register";
         }
         userService.register(dto);
-        return "board/boardlist";
+        return "auth/login";
     }
 
     @PostMapping("/user/modify")
