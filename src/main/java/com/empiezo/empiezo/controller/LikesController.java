@@ -1,6 +1,6 @@
 package com.empiezo.empiezo.controller;
 
-import com.empiezo.empiezo.config.UserPrincipal;
+import com.empiezo.empiezo.security.UserPrincipal;
 import com.empiezo.empiezo.service.LikesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

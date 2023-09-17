@@ -1,6 +1,5 @@
-package com.empiezo.empiezo.service;
+package com.empiezo.empiezo.security;
 
-import com.empiezo.empiezo.config.UserPrincipal;
 import com.empiezo.empiezo.domain.BooleanState;
 import com.empiezo.empiezo.domain.Role;
 import com.empiezo.empiezo.domain.User;

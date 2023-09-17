@@ -1,4 +1,4 @@
-package com.empiezo.empiezo.security;
+package com.empiezo.empiezo.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
 package com.empiezo.empiezo.controller;
 
-import com.empiezo.empiezo.config.UserPrincipal;
+import com.empiezo.empiezo.security.UserPrincipal;
 import com.empiezo.empiezo.dto.CommentDto;
 import com.empiezo.empiezo.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;

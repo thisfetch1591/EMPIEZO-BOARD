@@ -1,8 +1,6 @@
-package com.empiezo.empiezo.service;
+package com.empiezo.empiezo.security;
 
-import com.empiezo.empiezo.config.UserPrincipal;
 import com.empiezo.empiezo.domain.User;
-import com.empiezo.empiezo.exception.UserNotFoundException;
 import com.empiezo.empiezo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

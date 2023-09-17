@@ -1,6 +1,6 @@
 package com.empiezo.empiezo.controller;
 
-import com.empiezo.empiezo.config.UserPrincipal;
+import com.empiezo.empiezo.security.UserPrincipal;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.UserDto;
 import com.empiezo.empiezo.service.UserService;

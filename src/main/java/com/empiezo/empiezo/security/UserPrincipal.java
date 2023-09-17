@@ -1,4 +1,4 @@
-package com.empiezo.empiezo.config;
+package com.empiezo.empiezo.security;
 
 import com.empiezo.empiezo.domain.BooleanState;
 import org.springframework.security.core.GrantedAuthority;

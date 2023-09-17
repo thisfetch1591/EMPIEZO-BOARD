@@ -1,7 +1,7 @@
 package com.empiezo.empiezo.security.config;
 
-import com.empiezo.empiezo.security.CustomLoginFailureHandler;
-import com.empiezo.empiezo.service.OAuth2CustomUserService;
+import com.empiezo.empiezo.security.handler.CustomLoginFailureHandler;
+import com.empiezo.empiezo.security.OAuth2CustomUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
