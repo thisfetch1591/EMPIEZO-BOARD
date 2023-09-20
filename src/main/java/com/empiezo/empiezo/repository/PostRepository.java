@@ -1,5 +1,6 @@
 package com.empiezo.empiezo.repository;
 
+import com.empiezo.empiezo.domain.BooleanState;
 import com.empiezo.empiezo.domain.Post;
 import com.empiezo.empiezo.domain.User;
 import org.springframework.data.domain.Page;

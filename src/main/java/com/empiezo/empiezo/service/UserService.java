@@ -48,6 +48,7 @@ public class UserService {
                     .email(request.getEmail())
                     .role(Role.ROLE_USER)
                     .isSocial(BooleanState.FALSE)
+                    .isDeleted(BooleanState.FALSE)
                     .build();
             userRepository.save(user);
         }
@@ -55,7 +56,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<User> getList(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        return userRepository.findByIsDeleted(BooleanState.FALSE, pageable);
     }
 
     @Transactional(readOnly = true)
@@ -76,13 +77,7 @@ public class UserService {
     public void delete(Long userId) {
         User findUser = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-        List<Post> posts = postRepository.findByUser(findUser);
-
-        List<Likes> likes = likesRepository.findByUser(findUser);
-
-        List<Comment> comments = commentRepository.findByUser(findUser);
-
-        userRepository.delete(findUser);
+        findUser.setDelete();
     }
 
     public boolean validateUniqueUser(UserDto.RegisterRequest request) throws Exception{

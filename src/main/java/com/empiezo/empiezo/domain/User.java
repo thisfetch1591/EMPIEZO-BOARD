@@ -34,6 +34,10 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    private BooleanState isDeleted;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private BooleanState isSocial;
 
     @OneToMany(mappedBy = "user")
@@ -49,5 +53,9 @@ public class User {
         this.nickname = nickname;
         this.password = password;
         return this;
+    }
+
+    public void setDelete() {
+        this.isDeleted = BooleanState.TRUE;
     }
 }

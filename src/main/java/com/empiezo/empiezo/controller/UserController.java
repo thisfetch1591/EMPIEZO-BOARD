@@ -33,7 +33,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users")
-    public String register(@Valid @ModelAttribute("dto") UserDto.RegisterRequest dto, BindingResult bindingResult, Model model) throws Exception {
+    public String register(@Valid @ModelAttribute("dto") UserDto.RegisterRequest dto,
+                           BindingResult bindingResult,
+                           Model model) throws Exception {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", dto);
             return "auth/register";
@@ -46,6 +49,7 @@ public class UserController {
     public String modify(@Valid @ModelAttribute("user") UserDto.ModifyRequest dto,
                                                         BindingResult bindingResult,
                                                         Model model) throws Exception{
+
         if (bindingResult.hasErrors()) {
             Long authUserId = dto.getId();
             UserDto.Response response = userService.get(authUserId);
@@ -68,19 +72,18 @@ public class UserController {
     public String login() {
         Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authUser != null && !(authUser instanceof AnonymousAuthenticationToken) && authUser.isAuthenticated()) {
-            return "redirect:/posts";
-        }
+        String alreadyAuth = authedUserVerify(authUser);
+        if (alreadyAuth != null) return alreadyAuth;
         return "auth/login";
     }
+
 
     @GetMapping("/create-user")
     public String registerView(@ModelAttribute("dto") UserDto.RegisterRequest dto) {
         Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authUser != null && !(authUser instanceof AnonymousAuthenticationToken) && authUser.isAuthenticated()) {
-            return "redirect:/posts";
-        }
+        String alreadyAuth = authedUserVerify(authUser);
+        if (alreadyAuth != null) return alreadyAuth;
         return "auth/register";
     }
 
@@ -113,5 +116,12 @@ public class UserController {
     @PostMapping("/login")
     public String errorLogin(@RequestParam("error") String error) {
         return "auth/login";
+    }
+
+    private String authedUserVerify(Authentication authUser) {
+        if (authUser != null && !(authUser instanceof AnonymousAuthenticationToken) && authUser.isAuthenticated()) {
+            return "redirect:/posts";
+        }
+        return null;
     }
 }
