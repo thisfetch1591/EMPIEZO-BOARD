@@ -72,4 +72,4 @@ SPRING BOOT + JPA + THYMELEAF를 사용해 게시판 서비스를 구현해 보�
 ---
 
 ## 📕 도메인 모델 다이어그램
-![](../../Downloads/Domain Model Diagram.png)
+![Domain Model Diagram](https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/31cb2c71-5cf6-48b3-ad17-474f22af575a)
