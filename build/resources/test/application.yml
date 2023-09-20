@@ -27,6 +27,14 @@ spring:
   thymeleaf:
     cache: false
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1000202227745-j6gubevipbqs77p1lursbu12sipoi0v9.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
 jwt:
   header: Authorization
   secret: aWhhdGVldmVyeXRoaW5nYWJvdXR5b3V3aHlkb2lsb3ZleW91eW91aGF0ZXZlcnl0aGluZ2Fib3V0bWV3aHlkb3lvdWxvdmVtZTE1OTEyNQo=

@@ -28,12 +28,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final PostRepository postRepository;
-
-    private final LikesRepository likesRepository;
-
-    private final CommentRepository commentRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
