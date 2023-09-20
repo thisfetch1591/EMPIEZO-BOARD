@@ -72,4 +72,23 @@ SPRING BOOT + JPA + THYMELEAF를 사용해 게시판 서비스를 구현해 보�
 ---
 
 ## 📕 도메인 모델 다이어그램
-![Domain Model Diagram](https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/31cb2c71-5cf6-48b3-ad17-474f22af575a)
+<img src="https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/31cb2c71-5cf6-48b3-ad17-474f22af575a" width="1000" height="1000"/>
+
+---
+
+## 📄 API DOCS
+<img width="1000" alt="스크린샷 2023-09-20 오후 8 10 13" src="https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/e80dffac-a446-456e-81e8-46c83b9b7dad"/>
+
+---
+
+## 🖥️ 실제 실행 화면
+<img width="1000" alt="스크린샷 2023-09-20 오후 8 06 06" src="https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/196d478d-c6bb-4db1-9203-2b027d81c2c9"/>
+- 게시글 목록입니다.
+
+
+<img width="1000" alt="스크린샷 2023-09-20 오후 8 07 26" src="https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/cbd84d8c-ad76-492c-9032-8c63e0ccf41f"/>
+- 게시글 상세보기입니다.
+
+
+<img width="1000" alt="스크린샷 2023-09-20 오후 8 06 39" src="https://github.com/thisfetch1591/EMPIEZO-BOARD/assets/144662707/3bd51655-4997-40d9-8767-76d1bc0b7a45"/>
+- 관리자만 접속 가능한 유저 관리 리스트입니다.
