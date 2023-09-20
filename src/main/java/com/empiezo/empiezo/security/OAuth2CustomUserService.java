@@ -57,6 +57,7 @@ public class OAuth2CustomUserService extends DefaultOAuth2UserService {
                 .nickname(nickname)
                 .isSocial(BooleanState.TRUE)
                 .email(email)
+                .isDeleted(BooleanState.FALSE)
                 .role(Role.ROLE_USER)
                 .build();
 

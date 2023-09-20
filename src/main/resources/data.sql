@@ -1,0 +1,2 @@
+INSERT INTO users(username, nickname, password, email, role, is_deleted, is_social)
+VALUES('admin', '관리자1', '$2a$12$9oTWwwzR0qzBssDDDWgPdOcZ3CIEwgpA5Aa1Qy5TlbFYNqYnf0jvC', 'pedro1022@naver.com', 'ROLE_ADMIN', 'FALSE', 'FALSE');
