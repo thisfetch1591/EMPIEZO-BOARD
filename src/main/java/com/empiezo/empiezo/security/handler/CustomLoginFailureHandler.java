@@ -1,11 +1,13 @@
 package com.empiezo.empiezo.security.handler;
 
+import com.empiezo.empiezo.exception.UserNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,10 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
         if (exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
             errorMessage = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
-        } else {
+        } else if (exception instanceof UsernameNotFoundException) {
+            errorMessage = "계정이 삭제되었습니다.";
+        }
+        else {
             errorMessage = exception.getMessage();
         }
 

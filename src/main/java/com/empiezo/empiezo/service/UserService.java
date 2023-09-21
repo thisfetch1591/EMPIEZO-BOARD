@@ -74,7 +74,7 @@ public class UserService {
         findUser.setDelete();
     }
 
-    public boolean validateUniqueUser(UserDto.RegisterRequest request) throws Exception{
+    public boolean validateUniqueUser(UserDto.RegisterRequest request) throws Exception {
         if (userRepository.existsUserByNickname(request.getNickname())) {
             throw new AlreadyExistUserNickname();
         }
