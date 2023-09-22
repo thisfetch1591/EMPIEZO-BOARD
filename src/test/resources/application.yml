@@ -3,18 +3,19 @@ spring:
     url: jdbc:h2:mem:testdb;NON_KEYWORDS=USER;MODE=MySQL
     username: sa
     driver-class-name: org.h2.Driver
-
+  session:
+    storage-type : redis
   sql:
     init:
       mode: always
-
   data:
     web:
       pageable:
         one-indexed-parameters: true
         default-page-size: 5
-
-
+    redis:
+      host: localhost
+      port: 6379
   jpa:
     hibernate:
       ddl-auto: create

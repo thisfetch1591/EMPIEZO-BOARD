@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
@@ -43,7 +44,10 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/posts")
                         .failureHandler(customLoginFailureHandler))
-
+                .sessionManagement(session->
+                        session.sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::changeSessionId)
+                                .maximumSessions(1)
+                                .expiredUrl("/login"))
                 .logout(logout -> logout
                         .logoutSuccessHandler((request, response, authentication) ->
                                 response.sendRedirect("/login")))

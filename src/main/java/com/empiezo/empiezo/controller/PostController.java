@@ -7,6 +7,9 @@ import com.empiezo.empiezo.dto.PostDto;
 import com.empiezo.empiezo.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -140,6 +143,20 @@ public class  PostController {
 
         if(userPrincipal != null) {
             model.addAttribute("currentUsername", currentUsername);
+        }
+    }
+
+    private void viewIncrease(Long id, HttpServletRequest request, HttpServletResponse response) {
+
+        Cookie oldCookie = null;
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("boardView")) {
+                    oldCookie = cookie;
+                }
+            }
         }
     }
 }
