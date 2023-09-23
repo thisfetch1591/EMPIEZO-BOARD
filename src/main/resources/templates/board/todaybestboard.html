@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 베스트</title>
+    <link rel="stylesheet" href="/css/boardlist.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+    <h1>오늘의 인기 게시물</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>글쓴이</th>
+            <th>추천수</th>
+            <th>작성시간</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}"></td>
+                <td>
+                    <a th:if="${post.isSecret.toString() == 'TRUE' and ((post.username == currentUsername) or #authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
+                        <a th:text="${post.title}" th:href="@{/posts/{postId}(postId = ${post.id})}"></a>
+                    </a>
+                    <a th:if="${post.isSecret.toString() == 'TRUE' and (post.username != currentUsername) and #authorization.expression('hasRole(''ROLE_USER'')')}">
+                        <a>비밀글입니다.</a>
+                    </a>
+                    <a th:if="${post.isSecret.toString() == 'FALSE'}">
+                        <a th:text="${post.title}" th:href="@{/posts/{postId}(postId = ${post.id})}"></a>
+                    </a>
+                </td>
+                <td th:text="${post.views}"></td>
+                <td th:text="${post.writer}"></td>
+                <td th:text="${post.getLikeCount}"></td>
+                <td th:text="${post.createdDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -72,7 +72,7 @@ public class  PostController {
         Page<Post> postList = postService.get(pageable);
 
         addAttributeWithModelForPagination(model, pageable, postList);
-        log.info("{}", model);
+
         return "board/boardlist";
     }
 
@@ -93,6 +93,17 @@ public class  PostController {
         }
 
         return "board/postdetails";
+    }
+
+    @GetMapping("/today-best-post")
+    public String getTodayBestPostList(Model model,
+                                       @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        getSessionCurrentUsername(model, userPrincipal);
+        List<Post> res = postService.getTodayBestPostList();
+        log.info("{}", res);
+        model.addAttribute("posts", res);
+
+        return "board/todaybestboard";
     }
 
 

@@ -1,0 +1,48 @@
+.post-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#post-title {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 2em;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post-meta .author,
+.post-meta .views {
+    margin-right: 16px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.post-content {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #333;
+}
+
+.timestamp {
+    float: right;
+}
+
+#comment-button,
+#comment-modify-button{
+    margin-top:10px;
+}

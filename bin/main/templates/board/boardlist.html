@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+    <link rel="stylesheet" href="/css/boardlist.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>게시글 목록</h1>
+    <table>
+        <!-- 게시글 목록을 표시 -->
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>글쓴이</th>
+            <th>추천수</th>
+            <th>작성시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td>
+                <a th:if="${post.isSecret.toString() == 'TRUE' and ((post.username == currentUsername) or #authorization.expression('hasRole(''ROLE_ADMIN'')'))}">
+                    <a th:text="${post.title}" th:href="@{/posts/{postId}(postId = ${post.id})}"></a>
+                </a>
+                <a th:if="${post.isSecret.toString() == 'TRUE' and (post.username != currentUsername) and #authorization.expression('hasRole(''ROLE_USER'')')}">
+                    <a>비밀글입니다.</a>
+                </a>
+                <a th:if="${post.isSecret.toString() == 'FALSE'}">
+                    <a th:text="${post.title}" th:href="@{/posts/{postId}(postId = ${post.id})}"></a>
+                </a>
+            </td>
+            <td th:text="${post.views}"></td>
+            <td th:text="${post.writer}"></td>
+            <td th:text="${post.getLikeCount}"></td>
+            <td th:text="${post.createdDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <nav class="justify-content-center">
+        <ul class="pagination" th:with="start=${(posts.number/10) * 10 + 1},
+         end=(${(posts.totalPages == 0) ? 1 : (start + (10 - 1) < posts.totalPages ? start + (10 - 1) : posts.totalPages)})">
+            <li th:if="${start > 1}">
+                <a th:href="@{/posts(page=0)}" th:text="'<<'"></a>
+            </li>
+            <li th:if="${start > 1}">
+                <a th:href="@{/posts(page=${start - 10})}" th:text="'<'"></a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(start, end)}">
+                <a th:text="${page}" th:href="@{/posts(page=${page - 1})}"></a>
+            </li>
+            <li th:if="${end < posts.totalPages}">
+                <a th:href="@{/posts(page=${start + 10})}" th:text="'>'"></a>
+            </li>
+            <li th:if="${end < posts.totalPages}">
+                <a th:href="@{/posts(page=${posts.totalPages - 1})}" th:text="'>>'"></a>
+            </li>
+        </ul>
+        <div class="search-context">
+            <form action="/posts/search" method="GET" role="search">
+                <div class="input-group mb-3">
+                    <input type="text" name="context" class="" id="search-input"/>
+                    <select name="select-search-type" id="myComboBox">
+                        <option value="title">제목</option>
+                        <option value="writer">글쓴이</option>
+                    </select>
+                    <button class="btn btn-primary">검색</button>
+                </div>
+            </form>
+        </div>
+        <button class="btn btn-primary" onclick="location.href = '/create-post'">글쓰기</button>
+    </nav>
+</div>
+</body>
+</html>
+</nav>
+</body>
+</html>

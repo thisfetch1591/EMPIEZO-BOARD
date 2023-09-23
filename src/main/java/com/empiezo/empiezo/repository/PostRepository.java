@@ -21,9 +21,16 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("UPDATE Post p SET p.views = p.views - 1 WHERE p.id = :id")
     int decreaseView(Long id);
 
-    List<Post> findByUser(User user);
-
     Page<Post> findByTitleContaining(String title, Pageable pageable);
 
     Page<Post> findByWriterContaining(String writer, Pageable pageable);
+
+    @Query(value = "SELECT p " +
+            "FROM Post p " +
+            "LEFT JOIN Likes l ON p.id = l.post.id " +
+            "WHERE FUNCTION('DATE_FORMAT', CURRENT_DATE, '%Y.%m.%d') = SUBSTRING(l.createdDate, 1, 10) " +
+            "GROUP BY p.id " +
+            "ORDER BY COUNT(l.id) DESC")
+    List<Post> findTodayBestLikePost();
+
 }

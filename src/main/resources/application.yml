@@ -42,6 +42,11 @@ spring:
             client-id: 1000202227745-j6gubevipbqs77p1lursbu12sipoi0v9.apps.googleusercontent.com
             client-secret: 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
             scope: profile, email
+  devtools:
+    livereload:
+      enable: true
+    restart:
+      enable: true
 logging:
   level:
     org:
@@ -53,5 +58,6 @@ logging:
 
 springdoc:
   packages-to-scan: com.empiezo.empiezo.controller
+  
 
 

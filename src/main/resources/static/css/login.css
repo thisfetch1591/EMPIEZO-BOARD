@@ -37,3 +37,11 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+#login-button {
+    margin-bottom: 10px;
+}
+
+.google-button {
+    margin-top: 5px;
+}
