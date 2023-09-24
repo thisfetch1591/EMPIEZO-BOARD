@@ -1,11 +1,9 @@
 package com.empiezo.empiezo.repository;
 
 import com.empiezo.empiezo.domain.BooleanState;
-import com.empiezo.empiezo.domain.Post;
 import com.empiezo.empiezo.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

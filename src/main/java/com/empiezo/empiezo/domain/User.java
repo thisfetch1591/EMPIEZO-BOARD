@@ -49,6 +49,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Likes> likes;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Image image;
     public User update(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
@@ -57,5 +59,9 @@ public class User {
 
     public void setDelete() {
         this.isDeleted = BooleanState.TRUE;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
