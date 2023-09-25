@@ -57,7 +57,7 @@ logging:
           jdbc:
             blind: trace
 file:
-  path: /Users/pedro/study/profileImage
+  path: /Users/pedro/study/profileImage/
 springdoc:
   packages-to-scan: com.empiezo.empiezo.controller
 

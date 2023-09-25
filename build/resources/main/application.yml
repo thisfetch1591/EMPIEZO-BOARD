@@ -47,6 +47,7 @@ spring:
       enable: true
     restart:
       enable: true
+
 logging:
   level:
     org:
@@ -55,9 +56,11 @@ logging:
         orm:
           jdbc:
             blind: trace
-
+file:
+  path: /Users/pedro/study/profileImage/
 springdoc:
   packages-to-scan: com.empiezo.empiezo.controller
+
   
 
 

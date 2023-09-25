@@ -1,5 +1,6 @@
 package com.empiezo.empiezo.controller;
 
+import com.empiezo.empiezo.dto.ImageDto;
 import com.empiezo.empiezo.security.UserPrincipal;
 import com.empiezo.empiezo.domain.User;
 import com.empiezo.empiezo.dto.UserDto;
@@ -49,7 +50,6 @@ public class UserController {
     public String modify(@Valid @ModelAttribute("user") UserDto.ModifyRequest dto,
                                                         BindingResult bindingResult,
                                                         Model model) throws Exception{
-
         if (bindingResult.hasErrors()) {
             Long authUserId = dto.getId();
             UserDto.Response response = userService.get(authUserId);

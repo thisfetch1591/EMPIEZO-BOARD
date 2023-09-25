@@ -37,14 +37,7 @@ public class UserService {
                     .isDeleted(BooleanState.FALSE)
                     .build();
 
-            Image image = Image.builder()
-                    .url("/asset/anonymous.jpeg")
-                    .user(user)
-                    .build();
-
-            user.setImage(image);
             userRepository.save(user);
-            imageRepository.save(image);
         }
     }
 

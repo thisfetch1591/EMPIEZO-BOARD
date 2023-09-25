@@ -10,6 +10,12 @@
 <body class="text-center">
 <div th:replace="~{fragments/header :: header}"></div>
 <main class="form-register">
+    <form method="post", action="/uploadProfile" enctype="multipart/form-data" th:object="${user}">
+        <img th:src="${user.getProfileImage()}" alt="Profile Picture" th:if="${user.getProfileImage() != null}" />
+        <img src="/asset/anonymous.jpeg" alt = "Profile Picture" th:if="${user.getProfileImage() == null}" />
+        <input type="file" name="imageFile" />
+        <button type="submit">프로필 사진 업로드</button>
+    </form>
     <form id="user-form" th:action="@{/user/modify}" th:object="${user}" method="post">
         <h1 class="h3 mb-3 fw-normal">회원수정</h1>
         <div class="form-floating" style="display:none;">

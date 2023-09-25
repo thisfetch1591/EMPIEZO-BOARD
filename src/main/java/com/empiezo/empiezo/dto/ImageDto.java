@@ -13,4 +13,9 @@ public class ImageDto {
 
     }
 
+    @Data
+    public static class ImageResponse {
+
+    }
+
 }

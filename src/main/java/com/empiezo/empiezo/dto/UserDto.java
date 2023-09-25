@@ -65,12 +65,11 @@ public class UserDto {
     @Data
     public static class Response {
         private final Long id;
-
         private final String username;
-
         private final String password;
         private final String nickname;
 
+        private final String profileImage;
         private final String email;
 
         @Builder
@@ -79,6 +78,11 @@ public class UserDto {
             this.password = user.getPassword();
             this.username = user.getUsername();
             this.nickname = user.getNickname();
+            if(user.getImage() == null) {
+                this.profileImage = null;
+            } else {
+                this.profileImage = user.getImage().getUrl();
+            }
             this.email = user.getEmail();
         }
     }
